@@ -9,9 +9,9 @@ const MainLayout = () => {
     <>
       <Navbar />
 
-      <div className="min-h-[calc(100vh-200px)]">
+      <main className="min-h-screen overflow-x-hidden">
         <Outlet />
-      </div>
+      </main>
 
       <Footer />
     </>

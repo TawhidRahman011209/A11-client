@@ -1,5 +1,10 @@
 import {
+  useEffect,
+  useState,
   createContext,
+} from "react";
+
+import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -9,8 +14,6 @@ import {
   signInWithPopup,
   getAuth,
 } from "firebase/auth";
-
-import { useEffect, useState } from "react";
 
 import app from "../firebase/firebase.config";
 

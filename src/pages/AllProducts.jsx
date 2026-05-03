@@ -33,7 +33,14 @@ const AllProducts = () => {
         />
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.length === 0 ? (
+        <div className="text-center py-20">
+          <h2 className="text-2xl font-bold">
+          No products found
+          </h2>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <div
             key={product._id}
@@ -41,7 +48,7 @@ const AllProducts = () => {
           >
             <figure>
               <img
-                src={product.images[0]}
+                src={product.images?.[0] || "https://via.placeholder.com/300"}
                 alt=""
                 className="h-64 w-full object-cover"
               />
@@ -70,6 +77,7 @@ const AllProducts = () => {
           </div>
         ))}
       </div>
+      )}
 
       <div className="flex justify-center gap-3 mt-10">
         {[...Array(totalPages).keys()].map((num) => (

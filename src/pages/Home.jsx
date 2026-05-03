@@ -27,7 +27,7 @@ const Home = () => {
         className="hero min-h-[80vh]"
         style={{
           backgroundImage:
-            "url(https://i.ibb.co.com/7NZ2w6z/garments.jpg)",
+            "url(https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2070&auto=format&fit=crop)",
         }}
       >
         <div className="hero-overlay bg-opacity-60"></div>

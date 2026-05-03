@@ -51,7 +51,7 @@ const ProductDetails = () => {
     <div className="max-w-6xl mx-auto px-5 py-20">
       <div className="grid lg:grid-cols-2 gap-10">
         <img
-          src={product.images[0]}
+          src={product.images?.[0] || "https://via.placeholder.com/500"}
           alt=""
           className="rounded-xl w-full"
         />

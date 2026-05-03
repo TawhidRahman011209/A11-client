@@ -8,16 +8,16 @@ import App from "./App";
 
 import { Toaster } from "react-hot-toast";
 
-import { AuthProvider } from "./context/AuthContext";
+import AuthContextProvider from "./context/AuthContext";
 
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
   <React.StrictMode>
-    <AuthProvider>
+    <AuthContextProvider>
       <App />
 
       <Toaster position="top-center" />
-    </AuthProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
