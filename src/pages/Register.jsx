@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
 import toast from "react-hot-toast";
-
-import { FcGoogle } from "react-icons/fc";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -20,6 +21,9 @@ const Register = () => {
   } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const [previewImage, setPreviewImage] =
+    useState("");
 
   const {
     register,
@@ -47,11 +51,28 @@ const Register = () => {
     return true;
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const imageURL =
+        URL.createObjectURL(file);
+
+      setPreviewImage(imageURL);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
-      await createUser(data.email, data.password);
+      await createUser(
+        data.email,
+        data.password
+      );
 
-      await updateUser(data.name, data.photoURL);
+      await updateUser(
+        data.name,
+        data.photoURL
+      );
 
       const userData = {
         name: data.name,
@@ -61,44 +82,57 @@ const Register = () => {
         status: "pending",
       };
 
-      await api.post("/api/auth/save-user", userData);
+      await api.post(
+        "/api/auth/save-user",
+        userData
+      );
 
-      toast.success("Registration Successful");
-
-      navigate("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const handleGoogleRegister = async () => {
-    try {
-      const result = await googleLogin();
-
-      const userData = {
-        name: result.user.displayName,
-        email: result.user.email,
-        photoURL: result.user.photoURL,
-        role: "buyer",
-        status: "pending",
-      };
-
-      await api.post("/api/auth/save-user", userData);
-
-      toast.success("Google Register Successful");
+      toast.success(
+        "Registration Successful"
+      );
 
       navigate("/");
     } catch (error) {
       toast.error(error.message);
     }
   };
+
+  const handleGoogleRegister =
+    async () => {
+      try {
+        const result =
+          await googleLogin();
+
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL:
+            result.user.photoURL,
+          role: "buyer",
+          status: "pending",
+        };
+
+        await api.post(
+          "/api/auth/save-user",
+          userData
+        );
+
+        toast.success(
+          "Google Register Successful"
+        );
+
+        navigate("/");
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
 
   return (
-    <div className="min-h-screen flex justify-center items-center px-5 bg-gradient-to-br from-base-200 via-base-100 to-base-300 py-10">
-      <div className="w-full max-w-lg bg-base-100/80 backdrop-blur-xl shadow-2xl rounded-3xl border border-base-300">
+    <div className="min-h-screen flex justify-center items-center px-5 py-10 bg-gradient-to-br from-base-300 via-base-200 to-base-100 transition-all duration-500">
+      <div className="w-full max-w-lg bg-base-100 shadow-2xl rounded-3xl border border-base-300">
         <div className="p-10">
           <div className="text-center mb-8">
-            <h2 className="text-5xl font-extrabold">
+            <h2 className="text-5xl font-extrabold text-base-content">
               Create Account
             </h2>
 
@@ -111,77 +145,125 @@ const Register = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-5"
           >
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="input input-bordered w-full h-12"
-              {...register("name", {
-                required: true,
-              })}
-            />
-
-            <input
-              type="text"
-              placeholder="Photo URL"
-              className="input input-bordered w-full h-12"
-              {...register("photoURL", {
-                required: true,
-              })}
-            />
-
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="input input-bordered w-full h-12"
-              {...register("email", {
-                required: true,
-              })}
-            />
-
-            <select
-              className="select select-bordered w-full h-12"
-              {...register("role")}
-            >
-              <option value="buyer">
-                Buyer
-              </option>
-
-              <option value="manager">
-                Manager
-              </option>
-            </select>
-
+            {/* NAME */}
             <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                placeholder="Enter your name"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                {...register("name", {
+                  required: true,
+                })}
+              />
+            </div>
+
+            {/* FILE UPLOAD */}
+            <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Upload Profile Picture
+              </label>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={
+                  handleImageUpload
+                }
+                className="file-input file-input-bordered w-full bg-base-200 border-base-300 text-base-content"
+              />
+
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  alt="preview"
+                  className="w-24 h-24 rounded-full object-cover mt-4 border-4 border-primary shadow-lg"
+                />
+              )}
+            </div>
+
+            {/* EMAIL */}
+            <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Email Address
+              </label>
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                {...register("email", {
+                  required: true,
+                })}
+              />
+            </div>
+
+            {/* ROLE */}
+            <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Role
+              </label>
+
+              <select
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                {...register("role")}
+              >
+                <option value="buyer">
+                  Buyer
+                </option>
+
+                <option value="manager">
+                  Manager
+                </option>
+              </select>
+            </div>
+
+            {/* PASSWORD */}
+            <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Password
+              </label>
+
               <input
                 type="password"
-                placeholder="Password"
-                className="input input-bordered w-full h-12"
+                placeholder="Enter password"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 {...register("password", {
                   required: true,
-                  validate: validatePassword,
+                  validate:
+                    validatePassword,
                 })}
               />
 
               {errors.password && (
                 <p className="text-error text-sm mt-2">
-                  {errors.password.message}
+                  {
+                    errors.password
+                      .message
+                  }
                 </p>
               )}
             </div>
 
-            <button
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:shadow-2xl hover:scale-[1.02] hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
+            {/* REGISTER BUTTON */}
+            <button className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-lg shadow-lg hover:shadow-2xl hover:scale-[1.02] hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
               Register
             </button>
           </form>
 
-          <div className="divider my-7">
+          <div className="divider my-7 text-base-content/50">
             OR CONTINUE WITH
           </div>
 
+          {/* GOOGLE BUTTON */}
           <button
-            onClick={handleGoogleRegister}
-            className="btn w-full mt-4 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-xl"
+            onClick={
+              handleGoogleRegister
+            }
+            className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-base-200 border border-base-300 shadow-md hover:shadow-xl hover:bg-base-300 transition-all duration-300 font-semibold text-base-content"
           >
             <img
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
@@ -192,7 +274,7 @@ const Register = () => {
             Continue With Google
           </button>
 
-          <p className="text-center mt-8 text-base-content/80">
+          <p className="text-center mt-8 text-base-content/70">
             Already have an account?{" "}
             <Link
               to="/login"

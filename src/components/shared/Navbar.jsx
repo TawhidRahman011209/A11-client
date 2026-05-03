@@ -51,7 +51,9 @@ const Navbar = () => {
       </li>
 
       <li>
-        <NavLink to="/products">All Products</NavLink>
+        <NavLink to="/products">
+          All Products
+        </NavLink>
       </li>
 
       <li>
@@ -59,7 +61,9 @@ const Navbar = () => {
       </li>
 
       <li>
-        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/contact">
+          Contact
+        </NavLink>
       </li>
 
       {user && (
@@ -109,23 +113,34 @@ const Navbar = () => {
       <div className="navbar-end gap-3">
         <button
           onClick={() =>
-            setTheme(theme === "light" ? "dark" : "light")
+            setTheme(
+              theme === "light"
+                ? "dark"
+                : "light"
+            )
           }
-          className="btn btn-sm"
+          className={`btn btn-sm px-5 rounded-xl shadow-md border-0 transition-all duration-300 ${
+            theme === "light"
+              ? "bg-white text-slate-800 hover:bg-slate-100"
+              : "bg-slate-900 text-white hover:bg-black"
+          }`}
         >
-          {theme === "light" ? "Dark" : "Light"}
+          {theme === "light"
+            ? "Dark"
+            : "Light"}
         </button>
 
         {!user ? (
           <>
-            <Link to="/login" className="btn btn-primary">
+            <Link
+              to="/login"
+              className="btn px-4 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg rounded-xl">
               Login
             </Link>
 
             <Link
               to="/register"
-              className="btn btn-outline"
-            >
+              className="btn px-4 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg rounded-xl">
               Register
             </Link>
           </>

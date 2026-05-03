@@ -10,8 +10,6 @@ import { useForm } from "react-hook-form";
 
 import toast from "react-hot-toast";
 
-import { FcGoogle } from "react-icons/fc";
-
 import { AuthContext } from "../context/AuthContext";
 
 import api from "../services/api";
@@ -67,11 +65,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center px-5 bg-gradient-to-br from-base-200 via-base-100 to-base-300">
-      <div className="w-full max-w-md bg-base-100/80 backdrop-blur-xl shadow-2xl rounded-3xl border border-base-300">
+    <div className="min-h-screen flex justify-center items-center px-5 py-10 bg-gradient-to-br from-base-300 via-base-200 to-base-100 transition-all duration-500">
+      <div className="w-full max-w-md bg-base-100 shadow-2xl rounded-3xl border border-base-300">
         <div className="p-10">
           <div className="text-center mb-8">
-            <h2 className="text-5xl font-extrabold">
+            <h2 className="text-5xl font-extrabold text-base-content">
               Welcome Back
             </h2>
 
@@ -84,15 +82,16 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-5"
           >
+            {/* EMAIL */}
             <div>
-              <label className="label font-semibold">
+              <label className="block mb-2 font-semibold text-base-content">
                 Email
               </label>
 
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input input-bordered w-full h-12"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 {...register("email", {
                   required: true,
                 })}
@@ -105,15 +104,16 @@ const Login = () => {
               )}
             </div>
 
+            {/* PASSWORD */}
             <div>
-              <label className="label font-semibold">
+              <label className="block mb-2 font-semibold text-base-content">
                 Password
               </label>
 
               <input
                 type="password"
                 placeholder="Enter password"
-                className="input input-bordered w-full h-12"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 {...register("password", {
                   required: true,
                 })}
@@ -126,19 +126,20 @@ const Login = () => {
               )}
             </div>
 
-            <button
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:shadow-2xl hover:scale-[1.02] hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
+            {/* LOGIN BUTTON */}
+            <button className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-lg shadow-lg hover:shadow-2xl hover:scale-[1.02] hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
               Login
             </button>
           </form>
 
-          <div className="divider my-7">
+          <div className="divider my-7 text-base-content/50">
             OR CONTINUE WITH
           </div>
 
+          {/* GOOGLE BUTTON */}
           <button
             onClick={handleGoogleLogin}
-            className="btn w-full mt-4 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-xl"
+            className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-base-200 border border-base-300 shadow-md hover:shadow-xl hover:bg-base-300 transition-all duration-300 font-semibold text-base-content"
           >
             <img
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
@@ -149,7 +150,7 @@ const Login = () => {
             Continue With Google
           </button>
 
-          <p className="text-center mt-8 text-base-content/80">
+          <p className="text-center mt-8 text-base-content/70">
             Don't have an account?{" "}
             <Link
               to="/register"
