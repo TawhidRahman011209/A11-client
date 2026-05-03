@@ -1,28 +1,101 @@
 import { useEffect, useState } from "react";
+
+import toast from "react-hot-toast";
+
 import api from "../../../services/api";
 
-const PendingOrders = () => {
+const PendingOrder = () => {
   const [orders, setOrders] = useState([]);
 
+  const fetchOrders = async () => {
+    const res = await api.get(
+      "/api/orders/pending"
+    );
+
+    setOrders(res.data);
+  };
+
   useEffect(() => {
-    api.get("/orders?status=pending")
-      .then(res => setOrders(res.data));
+    document.title = "Pending Orders";
+
+    fetchOrders();
   }, []);
 
-  const approve = async (id) => {
-    await api.patch(`/orders/${id}`, { status: "approved" });
+  const handleApprove = async (id) => {
+    await api.patch(`/api/orders/approve/${id}`);
+
+    toast.success("Order Approved");
+
+    fetchOrders();
+  };
+
+  const handleReject = async (id) => {
+    await api.patch(`/api/orders/reject/${id}`);
+
+    toast.success("Order Rejected");
+
+    fetchOrders();
   };
 
   return (
     <div>
-      {orders.map(o => (
-        <div key={o._id}>
-          {o.product?.name}
-          <button onClick={() => approve(o._id)}>Approve</button>
-        </div>
-      ))}
+      <h2 className="text-4xl font-bold mb-8">
+        Pending Orders
+      </h2>
+
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>User</th>
+
+              <th>Product</th>
+
+              <th>Quantity</th>
+
+              <th>Status</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order.userEmail}</td>
+
+                <td>{order.productName}</td>
+
+                <td>{order.quantity}</td>
+
+                <td>{order.status}</td>
+
+                <td className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      handleApprove(order._id)
+                    }
+                    className="btn btn-sm btn-success"
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      handleReject(order._id)
+                    }
+                    className="btn btn-sm btn-error"
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default PendingOrders;
+export default PendingOrder;

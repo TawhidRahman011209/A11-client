@@ -1,26 +1,91 @@
-import useProducts from "../hooks/useProducts";
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
-const AllProducts = () => {
-  const { products, loading } = useProducts();
+import useProducts from "../hooks/useProducts";
 
-  if (loading) return <p>Loading...</p>;
+import Loader from "../components/shared/Loader";
+
+const AllProducts = () => {
+  const [page, setPage] = useState(1);
+
+  const [search, setSearch] = useState("");
+
+  const { products, loading, totalPages } =
+    useProducts(page, search);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <div className="grid md:grid-cols-3 gap-6 p-6">
-      {products.map(p => (
-        <div key={p._id} className="border p-4 rounded">
-          <img src={p.images[0]} alt="" />
-          <h2 className="font-bold">{p.name}</h2>
-          <p>{p.category}</p>
-          <p>${p.price}</p>
-          <p>Stock: {p.quantity}</p>
+    <div className="max-w-7xl mx-auto px-5 py-20">
+      <h2 className="text-4xl font-bold text-center mb-10">
+        All Products
+      </h2>
 
-          <Link to={`/product/${p._id}`} className="btn">
-            View Details
-          </Link>
-        </div>
-      ))}
+      <div className="mb-10">
+        <input
+          type="text"
+          placeholder="Search by name/category"
+          className="input input-bordered w-full"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="card bg-base-100 shadow-xl"
+          >
+            <figure>
+              <img
+                src={product.images[0]}
+                alt=""
+                className="h-64 w-full object-cover"
+              />
+            </figure>
+
+            <div className="card-body">
+              <h2 className="card-title">
+                {product.name}
+              </h2>
+
+              <p>Category: {product.category}</p>
+
+              <p>Price: ${product.price}</p>
+
+              <p>Available: {product.quantity}</p>
+
+              <div className="card-actions justify-end">
+                <Link
+                  to={`/products/${product._id}`}
+                  className="btn btn-primary"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center gap-3 mt-10">
+        {[...Array(totalPages).keys()].map((num) => (
+          <button
+            key={num}
+            onClick={() => setPage(num + 1)}
+            className={`btn ${
+              page === num + 1
+                ? "btn-primary"
+                : "btn-outline"
+            }`}
+          >
+            {num + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

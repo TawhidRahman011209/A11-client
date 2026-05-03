@@ -1,16 +1,85 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+my_eleventh_assignment/ 
+│
+├── client/                # React Frontend
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── shared/
+│   │   │   │   ├── Navbar.jsx
+│   │   │   │   ├── Footer.jsx
+│   │   │   │   ├── Loader.jsx
+│   │   │   ├── ui/
+│   │   ├── context/
+│   │   │   ├──AuthContext.jsx
+│   │   ├── firebase
+│   │   │   ├── firebase.config.js
+│   │   ├── hooks/
+│   │   │   ├── useProducts.js
+│   │   ├── layouts/
+│   │   │   ├── MainLayout.jsx
+│   │   │   ├── DashboardLayout.jsx
+│   │   ├── pages/
+│   │   │   ├── Booking.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── AllProducts.jsx
+│   │   │   ├── ProductDetails.jsx
+│   │   │   ├── dashboard/
+│   │   │   │   ├── Admin/
+│   │   │   │   │   ├── AllOrders.jsx
+│   │   │   │   │   ├── AllProduct.jsx
+│   │   │   │   │   ├── ManagerUser.jsx
+│   │   │   │   ├── Manager/
+│   │   │   │   │   ├── AddProduct.jsx
+│   │   │   │   │   ├── ApprovedOrders.jsx
+│   │   │   │   │   ├── ManageProducts.jsx
+│   │   │   │   │   ├── PendingOrder.jsx
+│   │   │   │   ├── User/
+│   │   │   │   │   ├── MyOrders.jsx
+│   │   │   │   │   ├── Profile.jsx
+│   │   │   │   │   ├── TrackOrder.jsx
+│   │   ├── routes/
+│   │   │   ├── Router.jsx
+│   │   │   ├── PrivateRoute.jsx
+│   │   │   ├── RoleRoute.jsx
+│   │   ├── services/
+│   │   │   ├── api.js
+│   │   ├── utils/
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   ├── package.json
+│   ├──.env
+│   ├──index.html
+│   └── README.md
+│
+│
+├── server/                # Backend (Express)
+│   ├── config/
+│   │   ├── db.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── productController.js
+│   │   ├── orderController.js
+│   │   ├── userController.js
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── roleMiddleware.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   ├── Order.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── productRoutes.js
+│   │   ├── orderRoutes.js
+│   │   ├── userRoutes.js
+│   ├── utils/
+│   │   ├── generateToken.js
+│   ├── .env
+│   ├── index.js
+│   ├── package.json
+│

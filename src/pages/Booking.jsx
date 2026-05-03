@@ -1,81 +1,173 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+
+import { useForm } from "react-hook-form";
+
+import { useNavigate, useParams } from "react-router-dom";
+
+import toast from "react-hot-toast";
+
 import api from "../services/api";
+
+import { AuthContext } from "../context/AuthContext";
 
 const Booking = () => {
   const { id } = useParams();
+
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
-  const [form, setForm] = useState({
-    quantity: 1,
-    address: "",
-    phone: "",
-  });
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+  } = useForm();
+
+  const quantity = watch("quantity");
 
   useEffect(() => {
-    api.get(`/products/${id}`).then(res => setProduct(res.data));
+    const fetchProduct = async () => {
+      const res = await api.get(`/api/products/${id}`);
+
+      setProduct(res.data);
+    };
+
+    fetchProduct();
   }, [id]);
 
-  if (!product) return <p>Loading...</p>;
+  useEffect(() => {
+    if (product && quantity) {
+      setTotalPrice(product.price * quantity);
+    }
+  }, [quantity, product]);
 
-  const totalPrice = form.quantity * product.price;
+  const onSubmit = async (data) => {
+    if (data.quantity > product.quantity) {
+      return toast.error(
+        "Cannot exceed available quantity"
+      );
+    }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (
-      form.quantity < product.minOrder ||
-      form.quantity > product.quantity
-    ) {
-      return alert("Invalid quantity");
+    if (data.quantity < product.moq) {
+      return toast.error(
+        "Minimum order quantity not reached"
+      );
     }
 
     try {
-      await api.post("/orders", {
+      const orderData = {
+        ...data,
+        userEmail: user.email,
         productId: product._id,
-        quantity: form.quantity,
-        address: form.address,
-        phone: form.phone,
-      });
+        productName: product.name,
+        totalPrice,
+        paymentMethod: product.paymentOption,
+      };
 
-      alert("Order placed!");
-    } catch (err) {
-      alert(err.response?.data?.message);
+      await api.post("/api/orders", orderData);
+
+      toast.success("Order Placed Successfully");
+
+      navigate("/dashboard/my-orders");
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
+  if (!product) {
+    return null;
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-6">
+    <div className="max-w-3xl mx-auto py-20 px-5">
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="text-4xl font-bold text-center mb-8">
+            Booking Form
+          </h2>
 
-      <h1 className="text-xl font-bold">{product.name}</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid md:grid-cols-2 gap-5">
+              <input
+                type="email"
+                value={user.email}
+                readOnly
+                className="input input-bordered"
+              />
 
-      <input value={product.price} readOnly />
+              <input
+                type="text"
+                value={product.name}
+                readOnly
+                className="input input-bordered"
+              />
 
-      <input
-        type="number"
-        placeholder="Quantity"
-        onChange={(e) =>
-          setForm({ ...form, quantity: Number(e.target.value) })
-        }
-      />
+              <input
+                type="text"
+                value={`$${product.price}`}
+                readOnly
+                className="input input-bordered"
+              />
 
-      <input
-        placeholder="Phone"
-        onChange={(e) =>
-          setForm({ ...form, phone: e.target.value })
-        }
-      />
+              <input
+                type="text"
+                placeholder="First Name"
+                className="input input-bordered"
+                {...register("firstName")}
+              />
 
-      <input
-        placeholder="Address"
-        onChange={(e) =>
-          setForm({ ...form, address: e.target.value })
-        }
-      />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="input input-bordered"
+                {...register("lastName")}
+              />
 
-      <p>Total: ${totalPrice}</p>
+              <input
+                type="number"
+                placeholder="Order Quantity"
+                className="input input-bordered"
+                {...register("quantity")}
+              />
 
-      <button className="btn">Confirm Order</button>
-    </form>
+              <input
+                type="text"
+                value={totalPrice}
+                readOnly
+                className="input input-bordered"
+              />
+
+              <input
+                type="text"
+                placeholder="Contact Number"
+                className="input input-bordered"
+                {...register("phone")}
+              />
+            </div>
+
+            <textarea
+              placeholder="Delivery Address"
+              className="textarea textarea-bordered w-full mt-5"
+              {...register("address")}
+            ></textarea>
+
+            <textarea
+              placeholder="Additional Notes"
+              className="textarea textarea-bordered w-full mt-5"
+              {...register("notes")}
+            ></textarea>
+
+            <button className="btn btn-primary w-full mt-8">
+              Confirm Booking
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

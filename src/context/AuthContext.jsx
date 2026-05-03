@@ -1,36 +1,65 @@
-import { createContext, useEffect, useState } from "react";
 import {
-  getAuth,
+  createContext,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAuth,
 } from "firebase/auth";
+
+import { useEffect, useState } from "react";
+
 import app from "../firebase/firebase.config";
+
 import api from "../services/api";
 
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
 
-const AuthProvider = ({ children }) => {
+const googleProvider = new GoogleAuthProvider();
+
+const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [dbUser, setDbUser] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
-  // Firebase observer
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const loginUser = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const updateUser = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+  const logout = async () => {
+    await api.post("/api/auth/logout");
+
+    return signOut(auth);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
 
       if (currentUser?.email) {
-        try {
-          const res = await api.post("/auth/login", {
-            email: currentUser.email,
-            password: "social-login",
-          });
-          setDbUser(res.data);
-        } catch (err) {
-          console.log(err);
-        }
+        await api.post("/api/auth/jwt", {
+          email: currentUser.email,
+        });
       }
 
       setLoading(false);
@@ -39,18 +68,21 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const logout = async () => {
-    await signOut(auth);
-    await api.post("/auth/logout");
-    setUser(null);
-    setDbUser(null);
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    loginUser,
+    googleLogin,
+    updateUser,
+    logout,
   };
 
   return (
-    <AuthContext.Provider value={{ user, dbUser, loading, logout }}>
+    <AuthContext.Provider value={authInfo}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export default AuthProvider;
+export default AuthContextProvider;
