@@ -44,7 +44,7 @@ const DashboardLayout = () => {
           {/* LOGO */}
           <div className="mb-8">
             <h2 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Dashboard
+              GarmentsPro
             </h2>
 
             <p className="text-sm opacity-70 mt-2">
