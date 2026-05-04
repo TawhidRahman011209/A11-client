@@ -54,10 +54,14 @@ const Home = () => {
 
             <Link
               to="/products"
-              className="btn btn-primary btn-lg"
+              className="btn px-6 py-3 border-0 text-white 
+              bg-gradient-to-r from-indigo-600 to-purple-600 
+              hover:from-indigo-700 hover:to-purple-700 
+              rounded-xl shadow-lg text-lg font-semibold 
+              transition duration-300"
             >
               View Products
-            </Link>
+          </Link>
           </motion.div>
         </div>
       </div>

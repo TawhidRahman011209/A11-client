@@ -9,7 +9,7 @@ const DashboardLayout = () => {
     }`;
 
   return (
-    <div className="drawer lg:drawer-open min-h-screen bg-gradient-to-br from-slate-100 via-purple-50 to-indigo-100">
+    <div className="drawer lg:drawer-open min-h-screen bg-base-200">
       <input
         id="my-drawer-2"
         type="checkbox"
@@ -26,7 +26,7 @@ const DashboardLayout = () => {
         </label>
 
         <div className="p-4 md:p-8">
-          <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl min-h-[90vh] p-5 md:p-8 border border-white/30">
+          <div className="bg-base-100 rounded-3xl shadow-2xl min-h-[90vh] p-5 md:p-8 border border-base-300">
             <Outlet />
           </div>
         </div>
@@ -40,24 +40,21 @@ const DashboardLayout = () => {
           className="drawer-overlay"
         ></label>
 
-        <ul className="menu min-h-full w-80 p-6 bg-white shadow-2xl text-base-content">
+        <ul className="menu min-h-full w-80 p-6 bg-base-100 shadow-2xl text-base-content">
           {/* LOGO */}
           <div className="mb-8">
             <h2 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Dashboard
             </h2>
 
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm opacity-70 mt-2">
               Garments Management System
             </p>
           </div>
 
           <div className="space-y-2">
             <li>
-              <NavLink
-                to="/"
-                className={navLinkClass}
-              >
+              <NavLink to="/" className={navLinkClass}>
                 🏠 Home
               </NavLink>
             </li>
