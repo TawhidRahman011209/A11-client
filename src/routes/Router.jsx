@@ -76,11 +76,7 @@ const router = createBrowserRouter([
 
       {
         path: "products/:id",
-        element: (
-          <PrivateRoute>
-            <ProductDetails />
-          </PrivateRoute>
-        ),
+        element: <ProductDetails />,
       },
 
       {
@@ -125,13 +121,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "track-order/:id",
-
-        element: (
-          <RoleRoute role="buyer">
-            <TrackOrder />
-          </RoleRoute>
-        ),
+        path: "track-order/:id",   
+        element: <TrackOrder />
       },
 
       {

@@ -38,7 +38,6 @@ const Register = () => {
 
   const validatePassword = (password) => {
     const uppercase = /[A-Z]/;
-
     const lowercase = /[a-z]/;
 
     if (!uppercase.test(password)) {
@@ -67,13 +66,15 @@ const Register = () => {
     }
   };
 
+  // ✅ FIXED SUBMIT (REMOVED WRONG API CALL)
   const onSubmit = async (data) => {
     try {
       await createUser(
         data.email,
         data.password,
         data.name,
-        data.photoURL
+        data.photoURL,
+        data.role
       );
 
       toast.success(
@@ -86,6 +87,7 @@ const Register = () => {
     }
   };
 
+  // ✅ FIXED GOOGLE (REMOVED WRONG API CALL)
   const handleGoogleRegister =
     async () => {
       try {
@@ -188,6 +190,24 @@ const Register = () => {
               />
             </div>
 
+            {/* ROLE */}
+            <div>
+              <label className="block mb-2 font-semibold text-base-content">
+                Role
+              </label>
+
+              <select
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300"
+                {...register("role", {
+                  required: true,
+                })}
+              >
+                <option value="">Select Role</option>
+                <option value="buyer">Buyer</option>
+                <option value="manager">Manager</option>
+              </select>
+            </div>
+
             {/* PASSWORD */}
             <div>
               <label className="block mb-2 font-semibold text-base-content">
@@ -240,7 +260,6 @@ const Register = () => {
               )}
             </div>
 
-            {/* REGISTER BUTTON */}
             <button className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-lg shadow-lg hover:shadow-2xl hover:scale-[1.02] hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
               Register
             </button>
@@ -250,7 +269,6 @@ const Register = () => {
             OR CONTINUE WITH
           </div>
 
-          {/* GOOGLE BUTTON */}
           <button
             onClick={
               handleGoogleRegister

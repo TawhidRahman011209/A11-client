@@ -16,17 +16,20 @@ my_eleventh_assignment/
 │   │   │   ├── firebase.config.js
 │   │   ├── hooks/
 │   │   │   ├── useProducts.js
+│   │   │   ├── useUserRole.js
 │   │   ├── layouts/
 │   │   │   ├── MainLayout.jsx
 │   │   │   ├── DashboardLayout.jsx
 │   │   ├── pages/
+│   │   │   ├── About.jsx
+│   │   │   ├── AllProducts.jsx
 │   │   │   ├── Booking.jsx
+│   │   │   ├── Contact.jsx
 │   │   │   ├── Home.jsx
 │   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── AllProducts.jsx
-│   │   │   ├── ProductDetails.jsx
 │   │   │   ├── NotFound.jsx
+│   │   │   ├── ProductDetails.jsx
+│   │   │   ├── Register.jsx
 │   │   │   ├── dashboard/
 │   │   │   │   ├── Admin/
 │   │   │   │   │   ├── AllOrders.jsx

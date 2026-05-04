@@ -77,8 +77,7 @@ const MyOrders = () => {
                 <td className="flex gap-2">
                   <Link
                     to={`/dashboard/track-order/${order._id}`}
-                    className="btn btn-sm btn-primary"
-                  >
+                    className="btn btn-sm btn-primary">
                     View
                   </Link>
 
