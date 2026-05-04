@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import {
   Link,
@@ -9,6 +9,8 @@ import {
 import { useForm } from "react-hook-form";
 
 import toast from "react-hot-toast";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -24,6 +26,9 @@ const Login = () => {
 
   const from = location.state || "/";
 
+  const [showPassword, setShowPassword] =
+    useState(false);
+
   const {
     register,
     handleSubmit,
@@ -32,7 +37,10 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      await loginUser(data.email, data.password);
+      await loginUser(
+        data.email,
+        data.password
+      );
 
       toast.success("Login Successful");
 
@@ -54,9 +62,14 @@ const Login = () => {
         status: "pending",
       };
 
-      await api.post("/api/auth/save-user", userData);
+      await api.post(
+        "/api/auth/save-user",
+        userData
+      );
 
-      toast.success("Google Login Successful");
+      toast.success(
+        "Google Login Successful"
+      );
 
       navigate("/");
     } catch (error) {
@@ -110,14 +123,36 @@ const Login = () => {
                 Password
               </label>
 
-              <input
-                type="password"
-                placeholder="Enter password"
-                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                {...register("password", {
-                  required: true,
-                })}
-              />
+              <div className="relative">
+                <input
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  placeholder="Enter password"
+                  className="w-full px-4 py-3 pr-12 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                  {...register("password", {
+                    required: true,
+                  })}
+                />
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword(
+                      !showPassword
+                    )
+                  }
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-500"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash />
+                  ) : (
+                    <FaEye />
+                  )}
+                </button>
+              </div>
 
               {errors.password && (
                 <p className="text-error text-sm mt-2">

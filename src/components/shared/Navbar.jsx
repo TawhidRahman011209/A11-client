@@ -1,6 +1,11 @@
+// src/components/shared/Navbar.jsx
+
 import { useContext, useEffect, useState } from "react";
 
-import { Link, NavLink } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+} from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 
@@ -9,66 +14,127 @@ import api from "../../services/api";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } =
+    useContext(AuthContext);
 
-  const [dbUser, setDbUser] = useState(null);
+  const [dbUser, setDbUser] =
+    useState(null);
 
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "light"
+    localStorage.getItem("theme") ||
+      "light"
   );
 
+  // THEME
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
       theme
     );
 
-    localStorage.setItem("theme", theme);
+    localStorage.setItem(
+      "theme",
+      theme
+    );
   }, [theme]);
 
+  // GET DB USER
   useEffect(() => {
     const getUser = async () => {
-      if (user?.email) {
-        const res = await api.get("/api/users/me");
+      try {
+        if (user?.email) {
+          const res = await api.get(
+            "/api/users/me"
+          );
 
-        setDbUser(res.data);
+          setDbUser(res.data);
+        }
+      } catch (error) {
+        console.log(error.message);
       }
     };
 
     getUser();
   }, [user]);
 
+  // LOGOUT
   const handleLogout = async () => {
-    await logout();
+    try {
+      await logout();
 
-    toast.success("Logout Successful");
+      toast.success(
+        "Logout Successful"
+      );
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
+  // NAV LINKS
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? "text-primary font-bold"
+              : ""
+          }
+        >
+          Home
+        </NavLink>
       </li>
 
       <li>
-        <NavLink to="/products">
+        <NavLink
+          to="/products"
+          className={({ isActive }) =>
+            isActive
+              ? "text-primary font-bold"
+              : ""
+          }
+        >
           All Products
         </NavLink>
       </li>
 
       <li>
-        <NavLink to="/about">About</NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive
+              ? "text-primary font-bold"
+              : ""
+          }
+        >
+          About
+        </NavLink>
       </li>
 
       <li>
-        <NavLink to="/contact">
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive
+              ? "text-primary font-bold"
+              : ""
+          }
+        >
           Contact
         </NavLink>
       </li>
 
       {user && (
         <li>
-          <NavLink to="/dashboard/profile">
+          <NavLink
+            to="/dashboard/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "text-primary font-bold"
+                : ""
+            }
+          >
             Dashboard
           </NavLink>
         </li>
@@ -78,7 +144,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-md px-5 sticky top-0 z-50">
+      {/* LEFT */}
       <div className="navbar-start">
+        {/* MOBILE MENU */}
         <div className="dropdown">
           <div
             tabIndex={0}
@@ -90,27 +158,31 @@ const Navbar = () => {
 
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             {navLinks}
           </ul>
         </div>
 
+        {/* LOGO */}
         <Link
           to="/"
-          className="text-2xl font-bold text-primary"
+          className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
         >
           GarmentsPro
         </Link>
       </div>
 
+      {/* CENTER */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal gap-2 px-1">
+        <ul className="menu menu-horizontal px-1 gap-2">
           {navLinks}
         </ul>
       </div>
 
+      {/* RIGHT */}
       <div className="navbar-end gap-3">
+        {/* THEME BUTTON */}
         <button
           onClick={() =>
             setTheme(
@@ -130,35 +202,52 @@ const Navbar = () => {
             : "Light"}
         </button>
 
+        {/* NOT LOGGED IN */}
         {!user ? (
           <>
             <Link
               to="/login"
-              className="btn px-4 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg rounded-xl">
+              className="btn px-5 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl shadow-lg"
+            >
               Login
             </Link>
 
             <Link
               to="/register"
-              className="btn px-4 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg rounded-xl">
+              className="btn px-5 border-0 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl shadow-lg"
+            >
               Register
             </Link>
           </>
         ) : (
           <>
-            <img
-              src={user.photoURL}
-              alt=""
-              className="w-10 h-10 rounded-full"
-            />
+            {/* PROFILE IMAGE */}
+            <Link to="/dashboard/profile">
+              <img
+                src={
+                  user?.photoURL ||
+                  "https://i.ibb.co/4pDNDk1/avatar.png"
+                }
+                alt="profile"
+                className="w-11 h-11 rounded-full border-2 border-primary cursor-pointer hover:scale-105 duration-300"
+              />
+            </Link>
 
-            <span className="font-semibold hidden md:block">
-              {dbUser?.role}
-            </span>
+            {/* USER INFO */}
+            {/* <div className="hidden md:block">
+              <h2 className="font-bold">
+                {user?.displayName}
+              </h2>
 
+              <p className="text-sm capitalize text-primary">
+                {dbUser?.role}
+              </p>
+            </div> */}
+
+            {/* LOGOUT */}
             <button
               onClick={handleLogout}
-              className="btn btn-error"
+              className="btn btn-error rounded-xl"
             >
               Logout
             </button>

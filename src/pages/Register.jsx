@@ -9,14 +9,16 @@ import { useForm } from "react-hook-form";
 
 import toast from "react-hot-toast";
 
-import { AuthContext } from "../context/AuthContext";
+import {
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 
-import api from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const {
     createUser,
-    updateUser,
     googleLogin,
   } = useContext(AuthContext);
 
@@ -24,6 +26,9 @@ const Register = () => {
 
   const [previewImage, setPreviewImage] =
     useState("");
+
+  const [showPassword, setShowPassword] =
+    useState(false);
 
   const {
     register,
@@ -66,25 +71,9 @@ const Register = () => {
     try {
       await createUser(
         data.email,
-        data.password
-      );
-
-      await updateUser(
+        data.password,
         data.name,
         data.photoURL
-      );
-
-      const userData = {
-        name: data.name,
-        email: data.email,
-        photoURL: data.photoURL,
-        role: data.role,
-        status: "pending",
-      };
-
-      await api.post(
-        "/api/auth/save-user",
-        userData
       );
 
       toast.success(
@@ -100,22 +89,7 @@ const Register = () => {
   const handleGoogleRegister =
     async () => {
       try {
-        const result =
-          await googleLogin();
-
-        const userData = {
-          name: result.user.displayName,
-          email: result.user.email,
-          photoURL:
-            result.user.photoURL,
-          role: "buyer",
-          status: "pending",
-        };
-
-        await api.post(
-          "/api/auth/save-user",
-          userData
-        );
+        await googleLogin();
 
         toast.success(
           "Google Register Successful"
@@ -161,28 +135,41 @@ const Register = () => {
               />
             </div>
 
-            {/* FILE UPLOAD */}
+            {/* IMAGE */}
             <div>
               <label className="block mb-2 font-semibold text-base-content">
-                Upload Profile Picture
+                Profile Picture URL
               </label>
 
               <input
-                type="file"
-                accept="image/*"
-                onChange={
-                  handleImageUpload
-                }
-                className="file-input file-input-bordered w-full bg-base-200 border-base-300 text-base-content"
+                type="text"
+                placeholder="Paste image URL"
+                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                {...register("photoURL")}
               />
 
-              {previewImage && (
-                <img
-                  src={previewImage}
-                  alt="preview"
-                  className="w-24 h-24 rounded-full object-cover mt-4 border-4 border-primary shadow-lg"
+              <div className="mt-4">
+                <label className="block mb-2 font-semibold text-base-content">
+                  OR Upload Image Preview
+                </label>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={
+                    handleImageUpload
+                  }
+                  className="file-input file-input-bordered w-full bg-base-200 border-base-300 text-base-content"
                 />
-              )}
+
+                {previewImage && (
+                  <img
+                    src={previewImage}
+                    alt="preview"
+                    className="w-24 h-24 rounded-full object-cover mt-4 border-4 border-primary shadow-lg"
+                  />
+                )}
+              </div>
             </div>
 
             {/* EMAIL */}
@@ -201,42 +188,47 @@ const Register = () => {
               />
             </div>
 
-            {/* ROLE */}
-            <div>
-              <label className="block mb-2 font-semibold text-base-content">
-                Role
-              </label>
-
-              <select
-                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                {...register("role")}
-              >
-                <option value="buyer">
-                  Buyer
-                </option>
-
-                <option value="manager">
-                  Manager
-                </option>
-              </select>
-            </div>
-
             {/* PASSWORD */}
             <div>
               <label className="block mb-2 font-semibold text-base-content">
                 Password
               </label>
 
-              <input
-                type="password"
-                placeholder="Enter password"
-                className="w-full px-4 py-3 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                {...register("password", {
-                  required: true,
-                  validate:
-                    validatePassword,
-                })}
-              />
+              <div className="relative">
+                <input
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  placeholder="Enter password"
+                  className="w-full px-4 py-3 pr-12 rounded-xl bg-base-200 border border-base-300 text-base-content focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                  {...register(
+                    "password",
+                    {
+                      required: true,
+                      validate:
+                        validatePassword,
+                    }
+                  )}
+                />
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword(
+                      !showPassword
+                    )
+                  }
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-500"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash />
+                  ) : (
+                    <FaEye />
+                  )}
+                </button>
+              </div>
 
               {errors.password && (
                 <p className="text-error text-sm mt-2">

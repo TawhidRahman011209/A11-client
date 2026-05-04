@@ -1,27 +1,38 @@
 import { NavLink, Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
+  const navLinkClass = ({ isActive }) =>
+    `rounded-xl px-3 py-3 font-semibold transition-all duration-300 ${
+      isActive
+        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+        : "hover:bg-base-300"
+    }`;
+
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open min-h-screen bg-gradient-to-br from-slate-100 via-purple-50 to-indigo-100">
       <input
         id="my-drawer-2"
         type="checkbox"
         className="drawer-toggle"
       />
 
+      {/* CONTENT */}
       <div className="drawer-content flex flex-col">
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden m-4"
+          className="btn btn-primary drawer-button lg:hidden m-4 rounded-xl"
         >
           Open Dashboard
         </label>
 
-        <div className="p-5">
-          <Outlet />
+        <div className="p-4 md:p-8">
+          <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl min-h-[90vh] p-5 md:p-8 border border-white/30">
+            <Outlet />
+          </div>
         </div>
       </div>
 
+      {/* SIDEBAR */}
       <div className="drawer-side">
         <label
           htmlFor="my-drawer-2"
@@ -29,74 +40,118 @@ const DashboardLayout = () => {
           className="drawer-overlay"
         ></label>
 
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 space-y-2">
-          <h2 className="text-2xl font-bold mb-5">
-            Dashboard
-          </h2>
+        <ul className="menu min-h-full w-80 p-6 bg-white shadow-2xl text-base-content">
+          {/* LOGO */}
+          <div className="mb-8">
+            <h2 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Dashboard
+            </h2>
 
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
+            <p className="text-sm text-gray-500 mt-2">
+              Garments Management System
+            </p>
+          </div>
 
-          <li>
-            <NavLink to="/dashboard/profile">
-              Profile
-            </NavLink>
-          </li>
+          <div className="space-y-2">
+            <li>
+              <NavLink
+                to="/"
+                className={navLinkClass}
+              >
+                🏠 Home
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/my-orders">
-              My Orders
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/profile"
+                className={navLinkClass}
+              >
+                👤 Profile
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/track-order/1">
-              Track Order
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/my-orders"
+                className={navLinkClass}
+              >
+                📦 My Orders
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/add-product">
-              Add Product
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/track-order/1"
+                className={navLinkClass}
+              >
+                🚚 Track Order
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/manage-products">
-              Manage Products
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/add-product"
+                className={navLinkClass}
+              >
+                ➕ Add Product
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/pending-orders">
-              Pending Orders
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/manage-products"
+                className={navLinkClass}
+              >
+                🛍️ Manage Products
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/approved-orders">
-              Approved Orders
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/pending-orders"
+                className={navLinkClass}
+              >
+                ⏳ Pending Orders
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/manage-users">
-              Manage Users
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/approved-orders"
+                className={navLinkClass}
+              >
+                ✅ Approved Orders
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/all-orders">
-              All Orders
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/manage-users"
+                className={navLinkClass}
+              >
+                👥 Manage Users
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/dashboard/all-products">
-              All Products
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/dashboard/all-orders"
+                className={navLinkClass}
+              >
+                📋 All Orders
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/all-products"
+                className={navLinkClass}
+              >
+                🧥 All Products
+              </NavLink>
+            </li>
+          </div>
         </ul>
       </div>
     </div>

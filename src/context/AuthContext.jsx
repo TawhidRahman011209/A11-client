@@ -30,9 +30,35 @@ const AuthContextProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+ const createUser = async (
+  email,
+  password,
+  name,
+  photo
+) => {
+  const result =
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+  await updateProfile(result.user, {
+    displayName: name,
+    photoURL: photo,
+  });
+
+  // SAVE USER TO DATABASE
+  await api.post("/api/auth/save-user", {
+    name,
+    email,
+    photoURL: photo,
+    role: "buyer",
+    status: "approved",
+  });
+
+  return result;
+};
 
   const loginUser = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -49,27 +75,34 @@ const AuthContextProvider = ({ children }) => {
     });
   };
 
-  const logout = async () => {
-    await api.post("/api/auth/logout");
-
-    return signOut(auth);
-  };
+ const logout = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  const unsubscribe = onAuthStateChanged(
+    auth,
+    async (currentUser) => {
       setUser(currentUser);
 
       if (currentUser?.email) {
-        await api.post("/api/auth/jwt", {
+        await api.post("/api/auth/save-user", {
+          name: currentUser.displayName,
           email: currentUser.email,
+          photoURL: currentUser.photoURL,
         });
       }
 
       setLoading(false);
-    });
+    }
+  );
 
-    return () => unsubscribe();
-  }, []);
+  return () => unsubscribe();
+}, []);
 
   const authInfo = {
     user,

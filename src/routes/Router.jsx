@@ -44,6 +44,10 @@ import AllProduct from "../pages/dashboard/Admin/AllProduct";
 
 import NotFound from "../pages/NotFound";
 
+import About from "../pages/About";
+
+import Contact from "../pages/Contact";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,27 +55,27 @@ const router = createBrowserRouter([
 
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
 
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
 
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
 
       {
-        path: "/products",
+        path: "products",
         element: <AllProducts />,
       },
 
       {
-        path: "/products/:id",
+        path: "products/:id",
         element: (
           <PrivateRoute>
             <ProductDetails />
@@ -80,12 +84,22 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/booking/:id",
+        path: "booking/:id",
         element: (
           <PrivateRoute>
             <Booking />
           </PrivateRoute>
         ),
+      },
+
+      {
+        path: "about",
+        element: <About />,
+      },
+
+      {
+        path: "contact",
+        element: <Contact />,
       },
     ],
   },
@@ -199,8 +213,13 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
-      }
+      },
     ],
+  },
+
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
