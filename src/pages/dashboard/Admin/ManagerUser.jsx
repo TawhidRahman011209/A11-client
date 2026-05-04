@@ -97,7 +97,6 @@ const ManagerUser = () => {
 
                   <td>{user.email}</td>
 
-                  {/* ✅ ROLE (UPDATED) */}
                   <td className="font-semibold">
                     <span
                       className={`capitalize ${
@@ -113,7 +112,6 @@ const ManagerUser = () => {
                     </span>
                   </td>
 
-                  {/* ✅ STATUS (UPDATED) */}
                   <td>
                     <span
                       className={`badge px-3 py-2 text-sm font-medium ${
@@ -130,7 +128,6 @@ const ManagerUser = () => {
                     </span>
                   </td>
 
-                  {/* ACTION */}
                   <td>
                     {user.role !== "admin" && (
                       <button
@@ -166,7 +163,6 @@ const ManagerUser = () => {
         </div>
       </div>
 
-      {/* MODAL */}
       <dialog id="update_modal" className="modal">
         <div className="modal-box rounded-3xl p-6 bg-base-100 shadow-2xl border border-base-300">
           <h2 className="text-3xl font-bold mb-5 text-center">
@@ -174,7 +170,7 @@ const ManagerUser = () => {
           </h2>
 
           <div className="space-y-4">
-            {/* ROLE */}
+           
             <div className="bg-base-200 p-4 rounded-2xl border border-base-300">
               <label className="block text-sm font-semibold mb-2 text-gray-600">
                 Role
@@ -199,7 +195,6 @@ const ManagerUser = () => {
               </select>
             </div>
 
-            {/* STATUS */}
             <div className="bg-base-200 p-4 rounded-2xl border border-base-300">
               <label className="block text-sm font-semibold mb-2 text-gray-600">
                 Status
@@ -225,7 +220,6 @@ const ManagerUser = () => {
             </div>
           </div>
 
-          {/* CONDITIONAL */}
           {updateData.status ===
             "suspended" && (
             <div className="bg-base-200 p-4 rounded-2xl space-y-3 mt-4">
@@ -256,7 +250,6 @@ const ManagerUser = () => {
             </div>
           )}
 
-          {/* BUTTONS */}
           <div className="flex gap-3 mt-5">
             <button
               onClick={handleUpdateUser}

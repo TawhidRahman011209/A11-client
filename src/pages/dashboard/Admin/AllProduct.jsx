@@ -119,10 +119,8 @@ const AllProduct = () => {
                     </div>
                   </td>
 
-                  {/* ✅ ACTIONS */}
                   <td className="flex gap-2">
                     
-                    {/* 🔵 UPDATE BUTTON */}
                     <button
                       onClick={() =>
                         navigate(`/dashboard/update-product/${product._id}`)
@@ -132,7 +130,6 @@ const AllProduct = () => {
                       Update
                     </button>
 
-                    {/* 🔴 DELETE BUTTON */}
                     <button
                       onClick={() => handleDelete(product._id)}
                       className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none shadow-md"

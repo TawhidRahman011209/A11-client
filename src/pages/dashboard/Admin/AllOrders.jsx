@@ -76,7 +76,6 @@ const AllOrders = () => {
         All Orders
       </h2>
 
-      {/* SEARCH + FILTER */}
       <div className="flex flex-col lg:flex-row gap-4 mb-8">
         
         <input
@@ -101,7 +100,6 @@ const AllOrders = () => {
         </select>
       </div>
 
-      {/* CHARTS */}
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         
         <div className="bg-base-100 p-6 rounded-3xl shadow-xl border border-base-300">
@@ -137,7 +135,6 @@ const AllOrders = () => {
         </div>
       </div>
 
-      {/* TABLE */}
       <div className="bg-base-100 rounded-3xl shadow-xl border border-base-300 p-4">
         <div className="overflow-x-auto">
           <table className="table table-zebra">
@@ -164,7 +161,6 @@ const AllOrders = () => {
                   <td>{order.productName}</td>
                   <td>{order.quantity}</td>
 
-                  {/* ✅ CLEAN STATUS (NO BLUE BG) */}
                   <td className="font-medium text-gray-700">
                     {order.status}
                   </td>
