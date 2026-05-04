@@ -153,7 +153,7 @@ const ManagerUser = () => {
                             )
                             .showModal();
                         }}
-                        className="btn btn-xs btn-primary"
+                        className="btn btn-xs bg-blue-500 hover:bg-blue-600 text-white border-none shadow-sm"
                       >
                         Update
                       </button>

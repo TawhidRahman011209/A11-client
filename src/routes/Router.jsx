@@ -50,6 +50,8 @@ import Contact from "../pages/Contact";
 
 import OrderDetail from "../pages/dashboard/Admin/OrderDetail";
 
+import UpdateProduct from "../pages/dashboard/Admin/UpdateProduct";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -202,13 +204,22 @@ const router = createBrowserRouter([
         </RoleRoute>
       ),
       },
-      
+
       {
         path: "all-products",
 
         element: (
           <RoleRoute role="admin">
             <AllProduct />
+          </RoleRoute>
+        ),
+      },
+      
+      {
+        path: "update-product/:id",
+        element: (
+          <RoleRoute role="admin">
+            <UpdateProduct />
           </RoleRoute>
         ),
       },

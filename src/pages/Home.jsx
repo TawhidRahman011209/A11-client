@@ -84,7 +84,7 @@ const Home = () => {
             >
               <div className="relative overflow-hidden">
                 <img
-                  src={product.images[0]}
+                  src={product.images?.[0]}
                   alt=""
                   className="h-72 w-full object-cover group-hover:scale-110 transition duration-500"
                 />
@@ -100,7 +100,7 @@ const Home = () => {
                 </h2>
 
                 <p className="text-base opacity-80 leading-relaxed">
-                  {product.description.slice(0, 100)}...
+                  {product.description?.slice(0, 100) || "No description available"}...
                 </p>
 
                 <div className="pt-3">
