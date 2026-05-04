@@ -218,7 +218,7 @@ const router = createBrowserRouter([
       {
         path: "update-product/:id",
         element: (
-          <RoleRoute role="admin">
+          <RoleRoute role="admin" or role ="manager">
             <UpdateProduct />
           </RoleRoute>
         ),
