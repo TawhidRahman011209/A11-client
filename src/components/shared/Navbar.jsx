@@ -1,4 +1,3 @@
-// src/components/shared/Navbar.jsx
 
 import { useContext, useEffect, useState } from "react";
 

@@ -16,7 +16,6 @@ const DashboardLayout = () => {
         className="drawer-toggle"
       />
 
-      {/* CONTENT */}
       <div className="drawer-content flex flex-col">
         <label
           htmlFor="my-drawer-2"
@@ -32,7 +31,6 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      {/* SIDEBAR */}
       <div className="drawer-side">
         <label
           htmlFor="my-drawer-2"
