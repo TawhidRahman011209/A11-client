@@ -14,7 +14,6 @@ const UpdateProduct = () => {
     description: "",
   });
 
-  // 🔹 Fetch product data
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -33,7 +32,6 @@ const UpdateProduct = () => {
     fetchProduct();
   }, [id]);
 
-  // 🔹 Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -41,7 +39,6 @@ const UpdateProduct = () => {
     });
   };
 
-  // 🔹 Handle update
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,10 +54,8 @@ const UpdateProduct = () => {
   return (
   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-base-200 via-base-100 to-base-200 p-6">
     
-    {/* CARD */}
     <div className="w-full max-w-xl bg-base-100 rounded-3xl shadow-2xl border border-base-300 p-8">
 
-      {/* HEADER */}
       <h2 className="text-4xl font-bold text-center mb-2">
         Update Product
       </h2>
@@ -69,10 +64,8 @@ const UpdateProduct = () => {
         Edit product details and save changes
       </p>
 
-      {/* FORM */}
       <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* FIELD BOX */}
         <div className="bg-base-200 rounded-2xl p-4">
           <label className="block mb-2 font-semibold">
             Product Name
@@ -129,20 +122,17 @@ const UpdateProduct = () => {
           ></textarea>
         </div>
 
-        {/* BUTTONS */}
         <div className="flex gap-4 mt-6">
 
-          {/* SAVE */}
           <button
             type="submit"
             className="w-1/2 py-3 rounded-xl text-white font-semibold 
             bg-gradient-to-r from-indigo-500 to-purple-600 
             hover:scale-105 transition duration-300 shadow-lg"
           >
-            💾 Save Changes
+             Save Changes
           </button>
 
-          {/* CANCEL */}
           <button
             type="button"
             onClick={() => navigate(-1)}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // ✅ added
+import { useParams, useNavigate } from "react-router-dom"; 
 import api from "../../../services/api";
 
 const OrderDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // ✅ added
+  const navigate = useNavigate(); 
 
   const [order, setOrder] = useState(null);
 
@@ -24,7 +24,6 @@ const OrderDetail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 via-base-100 to-base-200 p-6 rounded-3xl shadow-inner">
       
-      {/* ✅ BACK BUTTON */}
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 mb-4 px-4 py-2 rounded-xl bg-base-100 border border-base-300 shadow hover:shadow-md transition"

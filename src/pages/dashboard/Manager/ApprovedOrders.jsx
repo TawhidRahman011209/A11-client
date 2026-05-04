@@ -31,12 +31,10 @@ const ApprovedOrders = () => {
   return (
     <div className="pl-4">
 
-      {/* TITLE */}
       <h2 className="text-4xl font-bold mb-8 text-gray-800">
         Approved Orders
       </h2>
 
-      {/* TABLE */}
       <div className="overflow-x-auto">
         <table className="table w-full border-separate border-spacing-y-3">
 
@@ -92,16 +90,13 @@ const ApprovedOrders = () => {
         </table>
       </div>
 
-      {/* MODAL */}
       <dialog id="tracking_modal" className="modal">
         <div className="modal-box max-w-md rounded-2xl p-6">
 
-          {/* HEADER */}
           <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
             Update Tracking
           </h2>
 
-          {/* STATUS */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">Status</label>
             <select
@@ -123,7 +118,6 @@ const ApprovedOrders = () => {
             </select>
           </div>
 
-          {/* LOCATION */}
           <div className="mb-4">
             <label className="block mb-2 font-medium">Location</label>
             <input
@@ -139,7 +133,6 @@ const ApprovedOrders = () => {
             />
           </div>
 
-          {/* NOTE */}
           <div className="mb-6">
             <label className="block mb-2 font-medium">Note</label>
             <textarea
@@ -164,7 +157,7 @@ const ApprovedOrders = () => {
               hover:from-purple-700 hover:to-indigo-700
               transition shadow-md"
             >
-              💾 Save Changes
+               Save Changes
             </button>
 
             <button

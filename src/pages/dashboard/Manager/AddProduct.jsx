@@ -62,7 +62,6 @@ const handleFileUpload = (e) => {
           className="grid md:grid-cols-2 gap-6"
         >
 
-          {/* PRODUCT NAME */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Product Name
@@ -75,7 +74,6 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* CATEGORY */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Category
@@ -93,7 +91,6 @@ const handleFileUpload = (e) => {
             </select>
           </div>
 
-          {/* PRICE */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Price
@@ -106,7 +103,6 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* QUANTITY */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Quantity
@@ -119,7 +115,6 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* MOQ */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Minimum Order Quantity (MOQ)
@@ -132,13 +127,11 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* IMAGE URL */}
           <div className="md:col-span-2">
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Product Images
             </label>
 
-            {/* FILE UPLOAD BUTTON */}
             <input
               type="file"
               multiple
@@ -147,7 +140,6 @@ const handleFileUpload = (e) => {
               className="file-input file-input-bordered w-full mb-3"
             />
 
-            {/* OR TEXT INPUT */}
             <input
               type="text"
               placeholder="Or paste image URLs (comma separated)"
@@ -158,7 +150,6 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* IMAGE PREVIEW */}
           <div className="flex gap-3 flex-wrap md:col-span-2">
             {preview.map((img, i) => (
               <img
@@ -169,7 +160,7 @@ const handleFileUpload = (e) => {
               />
             ))}
           </div>
-          {/* DEMO VIDEO */}
+        
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Demo Video Link
@@ -182,7 +173,6 @@ const handleFileUpload = (e) => {
             />
           </div>
 
-          {/* PAYMENT */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Payment Option
@@ -198,7 +188,6 @@ const handleFileUpload = (e) => {
             </select>
           </div>
 
-          {/* DESCRIPTION */}
           <div className="md:col-span-2">
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Description
@@ -211,7 +200,6 @@ const handleFileUpload = (e) => {
             ></textarea>
           </div>
 
-          {/* CHECKBOX */}
           <div className="md:col-span-2">
             <label className="flex items-center gap-3 text-gray-700 font-medium">
               <input
@@ -223,7 +211,6 @@ const handleFileUpload = (e) => {
             </label>
           </div>
 
-          {/* BUTTON */}
           <button
             type="submit"
             className="md:col-span-2 py-3 rounded-xl text-white font-semibold 
