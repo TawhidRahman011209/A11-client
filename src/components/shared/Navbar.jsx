@@ -61,10 +61,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-
-      toast.success(
-        "Logout Successful"
-      );
+      toast.success("Logout Successful");
     } catch (error) {
       toast.error(error.message);
     }
@@ -151,7 +148,7 @@ const Navbar = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost lg:hidden"
+            className="btn btn-ghost lg:hidden text-2xl mr-3"
           >
             ☰
           </div>
@@ -191,7 +188,7 @@ const Navbar = () => {
                 : "light"
             )
           }
-          className={`btn btn-sm px-5 rounded-xl shadow-md border-0 transition-all duration-300 ${
+          className={`btn btn-sm px-5 rounded-xl shadow-md border-0 ${
             theme === "light"
               ? "bg-white text-slate-800 hover:bg-slate-100"
               : "bg-slate-900 text-white hover:bg-black"
@@ -221,39 +218,39 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            {/* PROFILE IMAGE */}
-            <Link to="/dashboard/profile">
-              <img
-                src={
-                  user?.photoURL ||
-                  "https://i.ibb.co/4pDNDk1/avatar.png"
-                }
-                alt="profile"
-                className="w-11 h-11 rounded-full border-2 border-primary cursor-pointer hover:scale-105 duration-300"
-              />
-            </Link>
+            {/* PROFILE DROPDOWN */}
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+              >
+                <img
+                  src={
+                    user?.photoURL ||
+                    "https://i.ibb.co/4pDNDk1/avatar.png"
+                  }
+                  alt="profile"
+                  className="w-11 h-11 rounded-full border-2 border-primary cursor-pointer hover:scale-105 duration-300"
+                />
+              </div>
 
-            {/* USER INFO */}
-            {/* <div className="hidden md:block">
-              <h2 className="font-bold">
-                {user?.displayName}
-              </h2>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link to="/dashboard/profile">
+                    👤 Profile
+                  </Link>
+                </li>
 
-              <p className="text-sm capitalize text-primary">
-                {dbUser?.role}
-              </p>
-            </div> */}
-
-            {/* LOGOUT */}
-            <button
-              onClick={handleLogout}
-              className="btn px-5 border-0 text-white 
-              bg-gradient-to-r from-indigo-600 to-purple-600 
-              hover:from-indigo-700 hover:to-purple-700 
-              rounded-xl shadow-lg"
->           
-              Logout
-            </button>
+                <li>
+                  <button onClick={handleLogout}>
+                    🚪 Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
           </>
         )}
       </div>
