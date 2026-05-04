@@ -4,7 +4,7 @@ import { auth } from "../firebase/firebase.config";
 
 const api = axios.create({
   baseURL:
-    "http://localhost:5000",
+    "https://a11-server-lake.vercel.app",
 });
 
 api.interceptors.request.use(
