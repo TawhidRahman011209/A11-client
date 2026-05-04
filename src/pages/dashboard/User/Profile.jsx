@@ -25,7 +25,7 @@ const Profile = () => {
 
   return (
     <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+      <div className="w-full max-w-4xl bg-base-100 text-base-content rounded-3xl shadow-2xl overflow-hidden">
         {/* TOP BG */}
         <div className="h-48 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 relative">
           <div className="absolute left-1/2 -bottom-16 transform -translate-x-1/2">
@@ -35,39 +35,39 @@ const Profile = () => {
                 "https://i.ibb.co/4pDNDk1/avatar.png"
               }
               alt=""
-              className="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover"
+              className="w-32 h-32 rounded-full border-4 border-base-100 shadow-xl object-cover"
             />
           </div>
         </div>
 
         {/* CONTENT */}
         <div className="pt-24 pb-10 px-6 text-center">
-          <h2 className="text-4xl font-extrabold text-gray-800">
+          <h2 className="text-4xl font-extrabold">
             {user?.displayName || "User"}
           </h2>
 
-          <p className="text-gray-500 mt-2">
+          <p className="opacity-70 mt-2">
             {user?.email}
           </p>
 
           {/* INFO CARDS */}
           <div className="grid md:grid-cols-2 gap-5 mt-10">
-            <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-6 shadow-md">
-              <h3 className="text-lg font-bold text-gray-700">
+            <div className="bg-base-200 rounded-2xl p-6 shadow-md">
+              <h3 className="text-lg font-bold opacity-80">
                 User Role
               </h3>
 
-              <p className="text-2xl font-extrabold text-indigo-700 mt-2 capitalize">
+              <p className="text-2xl font-extrabold text-primary mt-2 capitalize">
                 {dbUser?.role || "buyer"}
               </p>
             </div>
 
-            <div className="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-6 shadow-md">
-              <h3 className="text-lg font-bold text-gray-700">
+            <div className="bg-base-200 rounded-2xl p-6 shadow-md">
+              <h3 className="text-lg font-bold opacity-80">
                 Account Status
               </h3>
 
-              <p className="text-2xl font-extrabold text-pink-700 mt-2 capitalize">
+              <p className="text-2xl font-extrabold text-secondary mt-2 capitalize">
                 {dbUser?.status || "pending"}
               </p>
             </div>
@@ -75,12 +75,12 @@ const Profile = () => {
 
           {/* SUSPENDED INFO */}
           {dbUser?.status === "suspended" && (
-            <div className="bg-red-100 border border-red-300 rounded-2xl p-5 mt-8">
-              <p className="text-red-600 font-semibold">
+            <div className="bg-error/10 border border-error rounded-2xl p-5 mt-8">
+              <p className="text-error font-semibold">
                 Reason: {dbUser?.suspendReason}
               </p>
 
-              <p className="text-red-600 mt-2">
+              <p className="text-error mt-2">
                 Feedback: {dbUser?.feedback}
               </p>
             </div>
