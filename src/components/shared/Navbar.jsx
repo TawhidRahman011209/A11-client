@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from "react";
 
 import {
@@ -11,6 +10,8 @@ import { AuthContext } from "../../context/AuthContext";
 import api from "../../services/api";
 
 import toast from "react-hot-toast";
+
+import logo from "../../assets/Logo.jpg";
 
 const Navbar = () => {
   const { user, logout } =
@@ -160,16 +161,22 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* LOGO */}
         <Link
           to="/"
-          className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+          className="flex items-center gap-2"
         >
-          GarmentsPro
+          <img
+            src={logo}
+            alt="logo"
+            className="w-9 h-9 object-cover rounded-full"
+          />
+
+          <span className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            GarmentsPro
+          </span>
         </Link>
       </div>
 
-      {/* CENTER */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-2">
           {navLinks}
@@ -198,7 +205,6 @@ const Navbar = () => {
             : "Light"}
         </button>
 
-        {/* NOT LOGGED IN */}
         {!user ? (
           <>
             <Link
@@ -245,7 +251,7 @@ const Navbar = () => {
 
                 <li>
                   <button onClick={handleLogout}>
-                    🚪 Logout
+                     Logout
                   </button>
                 </li>
               </ul>

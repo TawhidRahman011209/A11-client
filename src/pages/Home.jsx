@@ -9,64 +9,108 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [products, setProducts] = useState([]);
 
+  const slides = [
+    {
+      title: "Garments Order Tracker",
+      desc: "Manage garments products, customer orders, inventory, and production workflow seamlessly with our modern smart garments management platform.",
+      img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2070&auto=format&fit=crop",
+    },
+    {
+      title: "Production Management System",
+      desc: "Manage garments products, customer orders, inventory, and production workflow seamlessly with our modern smart garments management platform.",
+      img: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=2070&auto=format&fit=crop",
+    },
+    {
+      title: "Smart Inventory Solution",
+      desc: "Manage garments products, customer orders, inventory, and production workflow seamlessly with our modern smart garments management platform.",
+      img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2070&q=80",
+    },
+  ];
+
+  const extendedSlides = [...slides, slides[0]];
+
+  const [current, setCurrent] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
   useEffect(() => {
     document.title = "Home | GarmentsPro";
 
     const fetchProducts = async () => {
       const res = await api.get("/api/products/home");
-
       setProducts(res.data);
     };
 
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => prev + 1);
+      setIsTransitioning(true);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (current === slides.length) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrent(0);
+      }, 800);
+    } else {
+      setIsTransitioning(true);
+    }
+  }, [current]);
+
   return (
     <div className="bg-gradient-to-b from-base-100 via-base-200 to-base-100">
 
-      {/* HERO SECTION */}
-      <div
-        className="hero min-h-[80vh]"
-        style={{
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2070&auto=format&fit=crop)",
-        }}
-      >
-        <div className="hero-overlay bg-black bg-opacity-60"></div>
-
-        <div className="hero-content text-neutral-content text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <h1 className="mb-6 text-5xl md:text-6xl font-bold leading-tight">
-              Garments Order & Production Tracker
-            </h1>
-
-            <p className="mb-6 text-lg">
-              Manage garments products, customer orders,
-              inventory, and production workflow seamlessly
-              with our modern smart garments management
-              platform.
-            </p>
-
-            <Link
-              to="/products"
-              className="btn px-6 py-3 border-0 text-white 
-              bg-gradient-to-r from-indigo-600 to-purple-600 
-              hover:from-indigo-700 hover:to-purple-700 
-              rounded-xl shadow-lg text-lg font-semibold 
-              transition duration-300"
+      <div className="relative h-[80vh] overflow-hidden">
+        <motion.div
+          animate={{ x: `-${current * 100}%` }}
+          transition={
+            isTransitioning
+              ? { duration: 0.8, ease: "easeInOut" }
+              : { duration: 0 }
+          }
+          className="flex h-full"
+        >
+          {extendedSlides.map((slide, i) => (
+            <div
+              key={i}
+              className="w-full h-[80vh] flex-shrink-0 bg-cover bg-center flex items-center justify-center"
+              style={{ backgroundImage: `url(${slide.img})` }}
             >
-              View Products
-          </Link>
-          </motion.div>
-        </div>
+              <div className="bg-black/60 w-full h-full flex items-center justify-center">
+                <div className="hero-content text-neutral-content text-center">
+                  <div className="max-w-3xl">
+                    <h1 className="mb-6 text-5xl md:text-6xl font-bold leading-tight">
+                      {slide.title}
+                    </h1>
+
+                    <p className="mb-6 text-lg">
+                      {slide.desc}
+                    </p>
+
+                    <Link
+                      to="/products"
+                      className="btn px-6 py-3 border-0 text-white 
+                      bg-gradient-to-r from-indigo-600 to-purple-600 
+                      hover:from-indigo-700 hover:to-purple-700 
+                      rounded-xl shadow-lg text-lg font-semibold 
+                      transition duration-300"
+                    >
+                      View Products
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* PRODUCTS SECTION */}
       <section className="py-24 px-5 max-w-7xl mx-auto">
         <h2 className="text-5xl font-bold text-center mb-4">
           Our Products
@@ -121,7 +165,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
       <section className="py-24 bg-base-200">
         <div className="max-w-6xl mx-auto px-5">
           <h2 className="text-5xl font-bold text-center mb-4">
@@ -138,11 +181,7 @@ const Home = () => {
             <div className="card bg-base-100 shadow-2xl hover:shadow-primary/20 transition duration-300">
               <div className="card-body items-center text-center py-10">
                 <div className="text-5xl mb-4">🛍️</div>
-
-                <h2 className="text-2xl font-bold">
-                  Choose Product
-                </h2>
-
+                <h2 className="text-2xl font-bold">Choose Product</h2>
                 <p>
                   Browse garments collections and choose
                   products that fit your fashion needs.
@@ -153,11 +192,7 @@ const Home = () => {
             <div className="card bg-base-100 shadow-2xl hover:shadow-primary/20 transition duration-300">
               <div className="card-body items-center text-center py-10">
                 <div className="text-5xl mb-4">📦</div>
-
-                <h2 className="text-2xl font-bold">
-                  Place Order
-                </h2>
-
+                <h2 className="text-2xl font-bold">Place Order</h2>
                 <p>
                   Submit your booking and confirm your
                   garments production order instantly.
@@ -168,11 +203,7 @@ const Home = () => {
             <div className="card bg-base-100 shadow-2xl hover:shadow-primary/20 transition duration-300">
               <div className="card-body items-center text-center py-10">
                 <div className="text-5xl mb-4">🚚</div>
-
-                <h2 className="text-2xl font-bold">
-                  Track Production
-                </h2>
-
+                <h2 className="text-2xl font-bold">Track Production</h2>
                 <p>
                   Monitor real-time production status,
                   delivery updates, and order progress.
@@ -183,7 +214,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CUSTOMER FEEDBACK */}
       <section className="py-24 px-5 bg-gradient-to-r from-base-200 to-base-100">
         <h2 className="text-5xl font-bold text-center mb-4">
           Customer Feedback
@@ -200,47 +230,31 @@ const Home = () => {
           <div className="card bg-base-100 shadow-2xl p-6 rounded-3xl">
             <div className="card-body text-center">
               <div className="text-5xl mb-4">⭐</div>
-
               <p className="text-lg leading-relaxed">
                 Excellent garments management system with
-                smooth production tracking and easy order
-                handling.
+                smooth production tracking and easy order handling.
               </p>
-
-              <h2 className="font-bold text-2xl mt-4">
-                Sarah Khan
-              </h2>
+              <h2 className="font-bold text-2xl mt-4">Sarah Khan</h2>
             </div>
           </div>
 
           <div className="card bg-base-100 shadow-2xl p-6 rounded-3xl">
             <div className="card-body text-center">
               <div className="text-5xl mb-4">⭐</div>
-
               <p className="text-lg leading-relaxed">
-                Very professional platform for garments
-                factories. The tracking system saves a lot
-                of production time.
+                Very professional platform for garments factories.
               </p>
-
-              <h2 className="font-bold text-2xl mt-4">
-                Ahmed Rahman
-              </h2>
+              <h2 className="font-bold text-2xl mt-4">Ahmed Rahman</h2>
             </div>
           </div>
 
           <div className="card bg-base-100 shadow-2xl p-6 rounded-3xl">
             <div className="card-body text-center">
               <div className="text-5xl mb-4">⭐</div>
-
               <p className="text-lg leading-relaxed">
-                Modern design, easy dashboard, and smooth
-                ordering experience. Highly recommended.
+                Modern design and smooth ordering experience.
               </p>
-
-              <h2 className="font-bold text-2xl mt-4">
-                Nusrat Jahan
-              </h2>
+              <h2 className="font-bold text-2xl mt-4">Nusrat Jahan</h2>
             </div>
           </div>
 
